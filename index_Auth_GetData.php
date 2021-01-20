@@ -2,6 +2,7 @@
 //1 - Create application as "Site" on https://vk.com/apps?act=manage
 //2 In the Settings - Address Site  =  site.com/myphpvk.php, Base domain - site.com, Open API - Enabled
 //3 Get on the same page - APP ID, Secure key, Service token
+include('config_keys.php');
 
 $token = AuthorizationVK();
 if(isset($token)){
@@ -20,13 +21,14 @@ echo "<p>Home town:"	.$response['response'][0]['home_town']."</p>";
 echo "<p>Home phone:"	.$response['response'][0]['home_phone']."</p>";
 }
 
-SendDirectVkMessageFromGroup($token['user_id'],"Hello from script2");
+//Call to Send Message
+//SendDirectVkMessageFromGroup($token['user_id'],"Hello from script2");
 
 //returns user individual token 
 function AuthorizationVK(){
-$ID='7734063';//App id
-$SECTRET='xjj66H1W04yKMM5Q7X3x';//Secure key,
-$SERVICE_KEY='140c0dfe140c0dfe140c0dfe84147a0ed11140c140c0dfe740b94be245b098c2880dec0'; // Service token
+$ID= constant("_ID");//App id
+$SECTRET= constant("_SECTRET");//Secure key,
+$SERVICE_KEY= constant("_SERVICE_KEY"); // Service token
 $URL='http://localhost/asu/vk_api.php';
 
 $link = 'https://oauth.vk.com/authorize?client_id='.$ID.'&display=page&redirect_uri='.$URL.'&scope=email&response_type=code&v=5.126&state=123456';
@@ -57,7 +59,6 @@ $json = file_get_contents('https://api.vk.com/method/users.get?'. $get_params);
 $response = json_decode($json, true);
 return $response;
 }
-
 
 function SendDirectVkMessageFromGroup($user_id,$message){
 $request_params = array(
