@@ -20,11 +20,13 @@ echo "<p>Home town:"	.$response['response'][0]['home_town']."</p>";
 echo "<p>Home phone:"	.$response['response'][0]['home_phone']."</p>";
 }
 
+SendDirectVkMessageFromGroup($token['user_id'],"Hello from script2");
+
 //returns user individual token 
 function AuthorizationVK(){
 $ID='7734063';//App id
-$SECTRET='i7g5SpJiUgReeECMCrU2';//Secure key,
-$SERVICE_KEY='5c0463ad5c0463ad5c0463ad115c72608255c045c0463ad3c03ee8f51aec47341272ce4'; // Service token
+$SECTRET='xjj66H1W04yKMM5Q7X3x';//Secure key,
+$SERVICE_KEY='140c0dfe140c0dfe140c0dfe84147a0ed11140c140c0dfe740b94be245b098c2880dec0'; // Service token
 $URL='http://localhost/asu/vk_api.php';
 
 $link = 'https://oauth.vk.com/authorize?client_id='.$ID.'&display=page&redirect_uri='.$URL.'&scope=email&response_type=code&v=5.126&state=123456';
@@ -54,5 +56,18 @@ $get_params = http_build_query($request_params);
 $json = file_get_contents('https://api.vk.com/method/users.get?'. $get_params);
 $response = json_decode($json, true);
 return $response;
+}
+
+
+function SendDirectVkMessageFromGroup($user_id,$message){
+$request_params = array(
+'message' => $message,
+'peer_id' => $user_id,
+'access_token' => '00000000000000000', //GROUP ACCESS TOKEN, NOT USER TOKEN
+'v' => '5.126',
+'random_id' => '0' 
+);
+$get_params = http_build_query($request_params);
+file_get_contents('https://api.vk.com/method/messages.send?'. $get_params); 
 }
 ?>
