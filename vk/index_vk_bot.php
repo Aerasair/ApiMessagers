@@ -2,7 +2,7 @@
 //1 - Create application as "Site" on https://vk.com/apps?act=manage
 //2 In the Settings - Address Site  =  site.com/myphpvk.php, Base domain - site.com, Open API - Enabled
 //3 Get on the same page - APP ID, Secure key, Service token
-include('config_keys.php');
+include('config_vk.php');
 
 $token = AuthorizationVK();
 if(isset($token)){
